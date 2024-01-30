@@ -8,7 +8,7 @@ void setup() {
 }
 
 void loop() {
-  int PIRState = digitalRead(pirSensorPin);
+  int PIRState = digitalRead(PIRSensorPin);
   if (PIRState == HIGH) {
     digitalWrite(ledPin, HIGH);
     Serial.println("Motion detected!");
