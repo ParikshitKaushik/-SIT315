@@ -68,7 +68,7 @@ int main() {
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
-    cout << "Time taken by optimized quick sort: " << duration.count() << " microseconds" << endl;
+    cout << "Time taken by quick sort: " << duration.count() << " microseconds" << endl;
 
     delete[] arr;
     return 0;
