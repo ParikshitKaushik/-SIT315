@@ -1,60 +1,58 @@
 #include <iostream>
-#include <fstream>
 #include <ctime>
 #include <cstdlib>
 
 using namespace std;
 
-void multiplyMatrices(int **A,int **B,int **C, int N){
-    for (int i = 0; i < N; ++i){
-        for (int j = 0; j < N; ++j){
-            C[i][j] = 0;
-            for (int k = 0; i < N; ++k){
-                C[i][j] += A[i][k] * B[k][j];
+const int N = 10;
+
+// Function to generate random values for matrix
+void generateRandomMatrix(int** matrix) {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            matrix[i][j] = rand() % 100; // Generate random values between 0 and 99
+        }
+    }
+}
+
+// Function to perform matrix multiplication
+void matrixMultiply(int** A, int** B, int** C) {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            C[i][j] = 0; // Initialize the element in C to 0
+            for (int k = 0; k < N; ++k) {
+                C[i][j] += A[i][k] * B[k][j]; // Perform the multiplication
             }
         }
     }
 }
 
-int main(){
-    const int N = 4
-    
-    int **A = new int*[N];
-    int **B = new int*[N];
-    int **C = new int*[N];
-    for (int i = 0; i < N; ++i){
+int main() {
+    // Dynamically allocate memory for matrices
+    int** A = new int*[N];
+    int** B = new int*[N];
+    int** C = new int*[N];
+    for (int i = 0; i < N; ++i) {
         A[i] = new int[N];
         B[i] = new int[N];
         C[i] = new int[N];
     }
-    
-    srand(time(0));
-    for (int i  =  0; i < N; ++i){
-        for(int j = 0; j < N; ++j){
-            A[i][j] = rand() % 100;
-            B[i][j] = rand() % 100;
-        }
-    }
-    
-    
-    clock_t startTime = clock();
-    muultiplyMatrices(A,B,C,N);
-    clock_t endTime = clock();
-    
-    double executionTime = double(endTime - startTime) / CLOCK_PER_SEC;
-    
-    ofstream outputFile("output.txt");
-    for (int i = 0; i < N; ++i){
-        for (int j = 0; j < N; ++j){
-            outputFile << C[i][j] << " ";
-        }
-        outputFile << endl;
-    }
-    outputFile.close();
-    
-    cout << "Matrix multiplication executed in " << executionTime << " seconds." << endl;
-    
-    for (int i = 0; i < N; ++i){
+
+    // Generate random values for matrices A and B
+    srand(time(0)); // Seed for random number generation
+    generateRandomMatrix(A);
+    generateRandomMatrix(B);
+
+    // Perform matrix multiplication
+    clock_t start_time = clock(); // Start timing
+    matrixMultiply(A, B, C);
+    clock_t end_time = clock(); // End timing
+
+    // Calculate execution time in seconds
+    double execution_time = double(end_time - start_time) / CLOCKS_PER_SEC;
+
+    // Deallocate memory for matrices
+    for (int i = 0; i < N; ++i) {
         delete[] A[i];
         delete[] B[i];
         delete[] C[i];
@@ -62,6 +60,9 @@ int main(){
     delete[] A;
     delete[] B;
     delete[] C;
-    
+
+    // Print execution time
+    cout << "Execution time (excluding initialization): " << execution_time << " seconds" << endl;
+
     return 0;
 }
