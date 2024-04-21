@@ -44,7 +44,6 @@ int main(int argc, char* argv[]) {
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    // Let's make a simple example where process 0 generates the array
     int n = 20; // Size of the array
     int* data = NULL;
     if (rank == 0) {
@@ -58,9 +57,6 @@ int main(int argc, char* argv[]) {
     }
 
     double start_time = MPI_Wtime();
-
-    // Ideally, you would now distribute the data, sort fragments in parallel, and then gather + merge them.
-    // For simplicity, we'll just sort the whole array at the root and measure the time.
 
     // Quick sort the array here at the root
     if (rank == 0) {
